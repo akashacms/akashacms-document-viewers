@@ -42,6 +42,11 @@ module.exports = class DocumentViewersPlugin extends akasha.Plugin {
         config.addAssetsDir(path.join(__dirname, 'assets'));
         config.addMahabhuta(module.exports.mahabhuta);
     }
+
+    isLegitLocalHref(config, href) {
+        return href.startsWith("/vendor/Viewer.js/");
+    }
+
 }
 
 var generateGoogleDocViewerUrl = function(documentUrl) {
@@ -97,7 +102,7 @@ class GoogleDocsViewLinkContent extends mahabhuta.CustomElement {
 
         return akasha.partial(metadata.config, template, {
             docViewerUrl: generateGoogleDocViewerUrl(href),
-            anchorText: anchorText
+            anchorText
         });
     }
 }
@@ -111,14 +116,14 @@ class ViewerJSViewerContent extends mahabhuta.CustomElement {
         var template = $element.attr('template');
         if (!template) template = "viewerjs-embed.html.ejs";
         if (!href) throw new Error("URL required for docviewer");
-        width = $element.attr("width");
+        var width = $element.attr("width");
         if (!width) width = "100%";
-        height = $element.attr("height");
+        var height = $element.attr("height");
         if (!height) height = "900px";
 
         return akasha.partial(metadata.config, template, {
             docUrl: generateViewerJSURL(href),
-            width: width, height: height
+            width, height
         });
     }
 }
@@ -137,7 +142,7 @@ class ViewerJSViewLinkContent extends mahabhuta.CustomElement {
 
         return akasha.partial(metadata.config, template, {
             docUrl: generateViewerJSURL(href),
-            anchorText: anchorText
+            anchorText
         });
     }
 }
