@@ -4,7 +4,7 @@
     "email": "david@davidherron.com",
     "url": "http://davidherron.com"
   },
-  "name": "AkashaCMS-document-viewers",
+  "name": "akashacms-document-viewers",
   "description": "A plugin for AkashaCMS supporting in-line viewing of rich documents",
   "homepage": "http://akashacms.com/new/plugins/document-viewers/index.html",
   "repository": {
