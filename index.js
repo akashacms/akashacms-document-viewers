@@ -24,7 +24,7 @@ const util     = require('util');
 const url      = require('url');
 // const co       = require('co');
 const akasha   = require('akasharender');
-const mahabhuta = require('mahabhuta');
+const mahabhuta = akasha.mahabhuta;
 
 const log     = require('debug')('akasha:document-viewers-plugin');
 const error   = require('debug')('akasha:error-document-viewers-plugin');
