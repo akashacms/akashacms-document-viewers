@@ -76,7 +76,6 @@ module.exports.mahabhuta = new mahabhuta.MahafuncArray(pluginName, {});
 class GoogleDocsViewerContent extends mahabhuta.CustomElement {
     get elementName() { return "googledocs-viewer"; }
     process($element, metadata, dirty) {
-        dirty();
         var href = $element.attr("href");
         var template = $element.attr('template');
         if (!template) template = "google-doc-viewer.html.ejs";
@@ -92,7 +91,6 @@ module.exports.mahabhuta.addMahafunc(new GoogleDocsViewerContent());
 class GoogleDocsViewLinkContent extends mahabhuta.CustomElement {
     get elementName() { return "googledocs-view-link"; }
     process($element, metadata, dirty) {
-        dirty();
         var href = $element.attr("href");
         var template = $element.attr('template');
         if (!template) template = "google-doc-viewer-link.html.ejs";
@@ -111,7 +109,6 @@ module.exports.mahabhuta.addMahafunc(new GoogleDocsViewLinkContent());
 class ViewerJSViewerContent extends mahabhuta.CustomElement {
     get elementName() { return "docviewer"; }
     process($element, metadata, dirty) {
-        dirty();
         var href = $element.attr("href");
         var template = $element.attr('template');
         if (!template) template = "viewerjs-embed.html.ejs";
@@ -132,7 +129,6 @@ module.exports.mahabhuta.addMahafunc(new ViewerJSViewerContent());
 class ViewerJSViewLinkContent extends mahabhuta.CustomElement {
     get elementName() { return "docviewer-link"; }
     process($element, metadata, dirty) {
-        dirty();
         var href = $element.attr("href");
         var template = $element.attr('template');
         if (!template) template = "viewerjs-link.html.ejs";
