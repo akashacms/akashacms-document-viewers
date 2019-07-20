@@ -26,22 +26,27 @@ const url      = require('url');
 const akasha   = require('akasharender');
 const mahabhuta = akasha.mahabhuta;
 
-const log     = require('debug')('akasha:document-viewers-plugin');
-const error   = require('debug')('akasha:error-document-viewers-plugin');
-
 const pluginName = "akashacms-document-viewers";
+
+const _plugin_config = Symbol('config');
+const _plugin_options = Symbol('options');
 
 module.exports = class DocumentViewersPlugin extends akasha.Plugin {
     constructor() {
         super(pluginName);
     }
 
-    configure(config) {
-        this._config = config;
+    configure(config, options) {
+        this[_plugin_config] = config;
+        this[_plugin_options] = options;
+        options.config = config;
         config.addPartialsDir(path.join(__dirname, 'partials'));
         config.addAssetsDir(path.join(__dirname, 'assets'));
-        config.addMahabhuta(module.exports.mahabhuta);
+        config.addMahabhuta(module.exports.mahabhutaArray(options));
     }
+
+    get config() { return this[_plugin_config]; }
+    get options() { return this[_plugin_options]; }
 
     isLegitLocalHref(config, href) {
         return href.startsWith("/vendor/Viewer.js/");
@@ -70,8 +75,14 @@ var generateViewerJSURL = function(docUrl) {
     }
 };
 
-
-module.exports.mahabhuta = new mahabhuta.MahafuncArray(pluginName, {});
+module.exports.mahabhutaArray = function(options) {
+    let ret = new mahabhuta.MahafuncArray(pluginName, options);
+    ret.addMahafunc(new GoogleDocsViewerContent());
+    ret.addMahafunc(new GoogleDocsViewLinkContent());
+    ret.addMahafunc(new ViewerJSViewerContent());
+    ret.addMahafunc(new ViewerJSViewLinkContent());
+    return ret;
+};
 
 class GoogleDocsViewerContent extends mahabhuta.CustomElement {
     get elementName() { return "googledocs-viewer"; }
@@ -81,12 +92,11 @@ class GoogleDocsViewerContent extends mahabhuta.CustomElement {
         if (!template) template = "google-doc-viewer.html.ejs";
         if (!href) throw new Error("URL required for googledocs-viewer");
 
-        return akasha.partial(metadata.config, template, {
+        return akasha.partial(this.array.options.config, template, {
             docViewerUrl: generateGoogleDocViewerUrl(href)
         });
     }
 }
-module.exports.mahabhuta.addMahafunc(new GoogleDocsViewerContent());
 
 class GoogleDocsViewLinkContent extends mahabhuta.CustomElement {
     get elementName() { return "googledocs-view-link"; }
@@ -98,13 +108,12 @@ class GoogleDocsViewLinkContent extends mahabhuta.CustomElement {
         var anchorText = $element.text();
         if (!anchorText) anchorText = "Click Here";
 
-        return akasha.partial(metadata.config, template, {
+        return akasha.partial(this.array.options.config, template, {
             docViewerUrl: generateGoogleDocViewerUrl(href),
             anchorText
         });
     }
 }
-module.exports.mahabhuta.addMahafunc(new GoogleDocsViewLinkContent());
 
 class ViewerJSViewerContent extends mahabhuta.CustomElement {
     get elementName() { return "docviewer"; }
@@ -118,13 +127,12 @@ class ViewerJSViewerContent extends mahabhuta.CustomElement {
         var height = $element.attr("height");
         if (!height) height = "900px";
 
-        return akasha.partial(metadata.config, template, {
+        return akasha.partial(this.array.options.config, template, {
             docUrl: generateViewerJSURL(href),
             width, height
         });
     }
 }
-module.exports.mahabhuta.addMahafunc(new ViewerJSViewerContent());
 
 class ViewerJSViewLinkContent extends mahabhuta.CustomElement {
     get elementName() { return "docviewer-link"; }
@@ -136,10 +144,9 @@ class ViewerJSViewLinkContent extends mahabhuta.CustomElement {
         var anchorText = $element.text();
         if (!anchorText) anchorText = "Click Here";
 
-        return akasha.partial(metadata.config, template, {
+        return akasha.partial(this.array.options.config, template, {
             docUrl: generateViewerJSURL(href),
             anchorText
         });
     }
 }
-module.exports.mahabhuta.addMahafunc(new ViewerJSViewLinkContent());
