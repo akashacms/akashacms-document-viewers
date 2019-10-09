@@ -4,16 +4,19 @@
     "email": "david@davidherron.com",
     "url": "http://davidherron.com"
   },
-  "name": "akashacms-document-viewers",
+  "name": "@akashacms/plugins-document-viewers",
   "description": "A plugin for AkashaCMS supporting in-line viewing of rich documents",
-  "homepage": "http://akashacms.com/new/plugins/document-viewers/index.html",
+  "homepage": "http://akashacms.com/plugins/document-viewers/index.html",
   "repository": {
     "type": "git",
     "url": "git://github.com/akashacms/akashacms-document-viewers.git"
   },
-  "version": "0.7.0",
+  "version": "0.7.1",
   "engines": {
     "node": ">=12.1"
+  },
+  "scripts": {
+      "dopublish": "npm publish --access public"
   },
   "dependencies": {
   }

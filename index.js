@@ -22,11 +22,10 @@
 const path     = require('path');
 const util     = require('util');
 const url      = require('url');
-// const co       = require('co');
 const akasha   = require('akasharender');
 const mahabhuta = akasha.mahabhuta;
 
-const pluginName = "akashacms-document-viewers";
+const pluginName = "@akashacms/plugins-document-viewers";
 
 const _plugin_config = Symbol('config');
 const _plugin_options = Symbol('options');
