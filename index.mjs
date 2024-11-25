@@ -19,18 +19,20 @@
 
 'use strict';
 
-const path     = require('path');
-const util     = require('util');
-const url      = require('url');
-const akasha   = require('akasharender');
+import path from 'node:path';
+import util from 'node:util';
+import url from 'node:url';
+import akasha from 'akasharender';
 const mahabhuta = akasha.mahabhuta;
+
+const __dirname = import.meta.dirname;
 
 const pluginName = "@akashacms/plugins-document-viewers";
 
 const _plugin_config = Symbol('config');
 const _plugin_options = Symbol('options');
 
-module.exports = class DocumentViewersPlugin extends akasha.Plugin {
+export class DocumentViewersPlugin extends akasha.Plugin {
     constructor() {
         super(pluginName);
     }
@@ -41,7 +43,7 @@ module.exports = class DocumentViewersPlugin extends akasha.Plugin {
         options.config = config;
         config.addPartialsDir(path.join(__dirname, 'partials'));
         config.addAssetsDir(path.join(__dirname, 'assets'));
-        config.addMahabhuta(module.exports.mahabhutaArray(options));
+        config.addMahabhuta(mahabhutaArray(options));
     }
 
     get config() { return this[_plugin_config]; }
@@ -74,7 +76,7 @@ var generateViewerJSURL = function(docUrl) {
     }
 };
 
-module.exports.mahabhutaArray = function(options) {
+export function mahabhutaArray(options) {
     let ret = new mahabhuta.MahafuncArray(pluginName, options);
     ret.addMahafunc(new GoogleDocsViewerContent());
     ret.addMahafunc(new GoogleDocsViewLinkContent());

@@ -13,8 +13,10 @@
   },
   "version": "0.8.0",
   "engines": {
-    "node": ">=12.1"
+    "node": ">=20.x"
   },
+  "main": "index.mjs",
+  "type": "module",
   "scripts": {
       "dopublish": "npm publish --access public"
   },
