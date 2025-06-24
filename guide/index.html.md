@@ -15,7 +15,7 @@ Add the following to `package.json`
 ```json
 "dependencies": {
       ...
-      "@akashacms/plugins-document-viewers": "^0.7.x",
+      "@akashacms/plugins-document-viewers": "^0.9.x",
       ...
 }
 ```
@@ -27,12 +27,12 @@ Once added to `package.json` run: `npm install`
 Add the following to `config.js`
 
 ```js
+import { DocumentViewersPlugin } from '@akashacms/plugins-document-viewers';
 config
     ...
-    .use(require('@akashacms/plugins-document-viewers'))
+    .use(DocumentViewersPlugin)
     ...
 ```
-
 
 # Custom Tags
 
@@ -51,7 +51,6 @@ Shows the document in-line on the current page.
 ```
 
 Links to a URL that will show the document.  The link will contain the _anchor text_ you provide.
-
 
 ## Google Docs Viewer
 
