@@ -60,9 +60,10 @@ export class DocumentViewersPlugin extends akasha.Plugin {
 
 var generateGoogleDocViewerUrl = function(documentUrl) {
     const uRet = new URL('https://docs.google.com/viewer');
-    uRet.searchParams = new URLSearchParams({
+    const sp = new URLSearchParams({
             url: documentUrl, embedded: true
     });
+    uRet.search = sp.toString();
     return uRet.toString();
     // return url.format({
     //     protocol: "http",
